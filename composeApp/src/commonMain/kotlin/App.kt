@@ -31,7 +31,7 @@ fun CarouselApp() {
     }
 
     // Constants
-    val maxSpeed = 2.5f // Degrees per frame roughly
+    val maxSpeed = 1.0f // Degrees per frame roughly
     
     // Animation Loop
     LaunchedEffect(isSpinning) {
@@ -48,7 +48,7 @@ fun CarouselApp() {
                         // Calculate speed based on position
                         var velocity = maxSpeed
                         val rampRange = 90f
-                        val minSpeed = 0.5f
+                        val minSpeed = 0.25f
                         
                         // Acceleration phase (first 90 deg)
                         if (currentRotation < rampRange) {
@@ -73,9 +73,9 @@ fun CarouselApp() {
         }
     }
 
-    // Define the 8 seats
+    // Define the seats
     val seats = remember {
-        listOf(
+        val outer = listOf(
             CarouselSeat(Color.Cyan, 180f),
             CarouselSeat(Color.Blue, 225f),
             CarouselSeat(Color.Magenta, 270f),
@@ -85,6 +85,18 @@ fun CarouselApp() {
             CarouselSeat(Color.Yellow, 90f),
             CarouselSeat(Color.Green, 135f)
         )
+        // Inner circle: 0.6f radius, offset by 90 degrees relative to outer
+        val inner = listOf(
+            CarouselSeat(Color.Cyan.copy(alpha=0.7f), 180f + 90f, 0.6f),
+            CarouselSeat(Color.Blue.copy(alpha=0.7f), 225f + 90f, 0.6f),
+            CarouselSeat(Color.Magenta.copy(alpha=0.7f), 270f + 90f, 0.6f),
+            CarouselSeat(Color.Gray.copy(alpha=0.7f), 315f + 90f, 0.6f),
+            CarouselSeat(Color.Red.copy(alpha=0.7f), 0f + 90f, 0.6f),
+            CarouselSeat(Color(0xFFFFA500).copy(alpha=0.7f), 45f + 90f, 0.6f),
+            CarouselSeat(Color.Yellow.copy(alpha=0.7f), 90f + 90f, 0.6f),
+            CarouselSeat(Color.Green.copy(alpha=0.7f), 135f + 90f, 0.6f)
+        )
+        outer + inner
     }
 
     Column(
@@ -117,7 +129,7 @@ fun CarouselApp() {
 
                 seats.forEach { seat ->
                    val angleRad = (seat.initialAngle) * (PI / 180f).toFloat()
-                   val dist = radius * 0.8f
+                   val dist = radius * seat.distanceFactor
                    val seatX = center.x + dist * cos(angleRad)
                    val seatY = center.y + dist * sin(angleRad)
                    
@@ -143,7 +155,8 @@ fun CarouselApp() {
                 currentRotation = 0f
                 isSpinning = true 
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF673AB7), contentColor = Color.White) // Deep Purple
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF673AB7),
+                contentColor = Color.White) // Deep Purple
         ) {
             Text("Start Ride")
         }
@@ -152,7 +165,8 @@ fun CarouselApp() {
         
         Button(
             onClick = { isSpinning = false },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = Color.White)
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red,
+                contentColor = Color.White)
         ) {
             Text("Emergency Stop")
         }
