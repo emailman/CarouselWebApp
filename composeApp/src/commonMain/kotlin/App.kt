@@ -21,12 +21,22 @@ fun CarouselApp() {
     var targetRevolutions by remember { mutableStateOf(1f) }
     var currentRotation by remember { mutableStateOf(0f) } // Total degrees rotated
     
+    // Audio
+    val soundPlayer = remember { SoundPlayer("carousel.mp3") }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            soundPlayer.dispose()
+        }
+    }
+
     // Constants
     val maxSpeed = 2.5f // Degrees per frame roughly
     
     // Animation Loop
     LaunchedEffect(isSpinning) {
         if (isSpinning) {
+            soundPlayer.play()
             while (isSpinning) {
                 withFrameNanos { _ ->
                     val totalDegrees = targetRevolutions * 360f
@@ -57,6 +67,9 @@ fun CarouselApp() {
                     }
                 }
             }
+            soundPlayer.stop()
+        } else {
+            soundPlayer.stop()
         }
     }
 
