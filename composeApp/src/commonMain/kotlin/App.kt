@@ -63,6 +63,10 @@ fun CarouselApp() {
                             // progress goes from 1.0 down to 0.0 as we approach the end
                              velocity = minSpeed + (maxSpeed - minSpeed) * progress
                         }
+                        
+                        // Update volume proportional to velocity
+                        soundPlayer.setVolume(velocity / maxSpeed)
+                        
                         currentRotation += velocity
                     }
                 }

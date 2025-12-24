@@ -3,4 +3,5 @@ expect class SoundPlayer(fileName: String) {
     fun pause()
     fun stop()
     fun dispose()
+    fun setVolume(volume: Float)
 }
