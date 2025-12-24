@@ -1,6 +1,6 @@
 # Carousel
 
-An interactive carousel (merry-go-round) simulation built with Kotlin Compose Multiplatform, targeting WebAssembly for the browser.
+An interactive carousel (merry-go-round) simulation built with Kotlin Compose Multiplatform, targeting both JVM desktop and WebAssembly (browser).
 
 ## Features
 
@@ -15,6 +15,7 @@ An interactive carousel (merry-go-round) simulation built with Kotlin Compose Mu
 ## Tech Stack
 
 - **Kotlin Multiplatform** with Compose for UI
+- **JVM Desktop** target with Compose Desktop and JavaFX for audio
 - **WebAssembly (WASM)** target for browser deployment
 - **Webpack** dev server for local development
 
@@ -24,6 +25,16 @@ An interactive carousel (merry-go-round) simulation built with Kotlin Compose Mu
 - Gradle 8.x
 
 ## Running Locally
+
+### Desktop (JVM)
+
+Run the desktop application:
+
+```bash
+./gradlew :composeApp:run
+```
+
+### Browser (WASM)
 
 Start the development server with hot reload:
 
@@ -53,9 +64,12 @@ Carousel/
 │       │   ├── App.kt              # Main carousel UI and animation logic
 │       │   ├── CarouselModel.kt    # Data model for carousel seats
 │       │   └── SoundPlayer.kt      # Sound player interface (expect)
+│       ├── desktopMain/kotlin/
+│       │   ├── main.kt             # Desktop entry point
+│       │   └── SoundPlayer.desktop.kt  # JavaFX sound implementation
 │       └── wasmJsMain/kotlin/
 │           ├── main.kt             # WASM entry point
-│           └── SoundPlayer.wasmJs.kt  # WASM sound implementation
+│           └── SoundPlayer.wasmJs.kt  # Web Audio sound implementation
 ├── build.gradle.kts
 └── settings.gradle.kts
 ```

@@ -3,9 +3,11 @@ kotlin = "2.0.20"
 compose = "1.6.11"
 agp = "8.2.2"
 androidx-activityCompose = "1.8.2"
+javafx = "21"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+javafx-media = { module = "org.openjfx:javafx-media", version.ref = "javafx" }
 
 [plugins]
 #kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

@@ -18,9 +18,12 @@ import kotlin.math.sin
 fun CarouselApp() {
     // State
     var isSpinning by remember { mutableStateOf(false) }
+
+    // Total degrees rotated
+    var currentRotation by remember { mutableStateOf(0f) }
+
     var targetRevolutions by remember { mutableStateOf(1f) }
-    var currentRotation by remember { mutableStateOf(0f) } // Total degrees rotated
-    
+
     // Audio
     val soundPlayer = remember { SoundPlayer("carousel.mp3") }
 
@@ -53,15 +56,18 @@ fun CarouselApp() {
                         // Acceleration phase (first 90 deg)
                         if (currentRotation < rampRange) {
                             val progress = currentRotation / rampRange
-                            velocity = minSpeed + (maxSpeed - minSpeed) * progress
+                            velocity =
+                                minSpeed + (maxSpeed - minSpeed) * progress
                         }
 
                         // Deceleration phase (last 90 deg)
                         else if (currentRotation > totalDegrees - rampRange) {
                             val remaining = totalDegrees - currentRotation
                             val progress = remaining / rampRange
-                            // progress goes from 1.0 down to 0.0 as we approach the end
-                             velocity = minSpeed + (maxSpeed - minSpeed) * progress
+                            // progress goes from 1.0 down to 0.0
+                            // as we approach the end
+                             velocity =
+                                 minSpeed + (maxSpeed - minSpeed) * progress
                         }
                         
                         // Update volume proportional to velocity
@@ -96,7 +102,8 @@ fun CarouselApp() {
             CarouselSeat(Color.Magenta.copy(alpha=0.7f), 270f + 90f, 0.6f),
             CarouselSeat(Color.Gray.copy(alpha=0.7f), 315f + 90f, 0.6f),
             CarouselSeat(Color.Red.copy(alpha=0.7f), 0f + 90f, 0.6f),
-            CarouselSeat(Color(0xFFFFA500).copy(alpha=0.7f), 45f + 90f, 0.6f),
+            CarouselSeat(Color(0xFFFFA500).copy(alpha=0.7f),
+                45f + 90f, 0.6f),
             CarouselSeat(Color.Yellow.copy(alpha=0.7f), 90f + 90f, 0.6f),
             CarouselSeat(Color.Green.copy(alpha=0.7f), 135f + 90f, 0.6f)
         )
@@ -114,7 +121,8 @@ fun CarouselApp() {
             val radius = size.minDimension / 2
             
             // Draw Platform
-            drawCircle(color = Color.LightGray, radius = radius, center = center)
+            drawCircle(color = Color.LightGray,
+                radius = radius, center = center)
             
             // Draw Seats with currentRotation
             // We rotate the entire platform context or calculate positions
@@ -132,7 +140,8 @@ fun CarouselApp() {
                 )
 
                 seats.forEach { seat ->
-                   val angleRad = (seat.initialAngle) * (PI / 180f).toFloat()
+                   val angleRad =
+                       (seat.initialAngle) * (PI / 180f).toFloat()
                    val dist = radius * seat.distanceFactor
                    val seatX = center.x + dist * cos(angleRad)
                    val seatY = center.y + dist * sin(angleRad)
@@ -159,8 +168,10 @@ fun CarouselApp() {
                 currentRotation = 0f
                 isSpinning = true 
             },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF673AB7),
-                contentColor = Color.White) // Deep Purple
+            colors =
+                ButtonDefaults.buttonColors(backgroundColor =
+                    Color(0xFF673AB7),
+                    contentColor = Color.White) // Deep Purple
         ) {
             Text("Start Ride")
         }
@@ -169,7 +180,8 @@ fun CarouselApp() {
         
         Button(
             onClick = { isSpinning = false },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red,
+            colors =
+                ButtonDefaults.buttonColors(backgroundColor = Color.Red,
                 contentColor = Color.White)
         ) {
             Text("Emergency Stop")
