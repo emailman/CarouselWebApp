@@ -61,7 +61,8 @@ fun CarouselApp() {
                         }
 
                         // Deceleration phase (last 90 deg)
-                        else if (currentRotation > totalDegrees - rampRange) {
+                        else if (currentRotation >
+                            totalDegrees - rampRange) {
                             val remaining = totalDegrees - currentRotation
                             val progress = remaining / rampRange
                             // progress goes from 1.0 down to 0.0
