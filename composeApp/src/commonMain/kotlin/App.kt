@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
 import kotlin.math.cos
@@ -45,7 +46,6 @@ fun CarouselApp() {
                 radius = radius, center = center
             )
 
-
             // Draw Center Hub (Square)
             val hubSize = 10.dp.toPx()
 
@@ -66,14 +66,17 @@ fun CarouselApp() {
                 val seatX = center.x + dist * cos(angleRad)
                 val seatY = center.y + dist * sin(angleRad)
 
-
-                val w = 40.dp.toPx()
-                val h = 15.dp.toPx()
-                drawRect(
-                    color = seat.color,
-                    topLeft = Offset(seatX - w / 2, seatY - h / 2),
-                    size = Size(w, h)
-                )
+                // Each seat must be rotated its center
+                rotate(degrees = seat.initialAngle + 90f,
+                    pivot = Offset(seatX, seatY)) {
+                    val w = 40.dp.toPx()
+                    val h = 15.dp.toPx()
+                    drawRect(
+                        color = seat.color,
+                        topLeft = Offset(seatX - w / 2, seatY - h / 2),
+                        size = Size(w, h)
+                    )
+                }
             }
         }
     }
