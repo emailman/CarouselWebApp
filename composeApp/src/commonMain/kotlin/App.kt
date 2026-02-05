@@ -1,3 +1,7 @@
+/**
+ * Starter code for carousel project
+ */
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -18,14 +22,14 @@ fun CarouselApp() {
     // Define the seats
     val seats = remember {
         val outer = listOf(
-            CarouselSeat(Color.Cyan, 180f),
-            CarouselSeat(Color.Blue, 225f),
-            CarouselSeat(Color.Magenta, 270f),
-            CarouselSeat(Color.Gray, 315f),
-            CarouselSeat(Color.Red, 0f),
-            CarouselSeat(Color(0xFFFFA500), 45f),
-            CarouselSeat(Color.Yellow, 90f),
-            CarouselSeat(Color.Green, 135f)
+            CarouselSeat(Color.Red, 0f),  // E
+            CarouselSeat(Color(0xFFFFA500), 45f),  // SE
+            CarouselSeat(Color.Yellow, 90f),  // S
+            CarouselSeat(Color.Green, 135f),  // SW
+            CarouselSeat(Color.Cyan, 180f),  // W
+            CarouselSeat(Color.Blue, 225f),  // NW
+            CarouselSeat(Color.Magenta, 270f),  // N
+            CarouselSeat(Color.Gray, 315f)  // NE
         )
         outer
     }
@@ -49,7 +53,6 @@ fun CarouselApp() {
             // Draw Center Hub (Square)
             val hubSize = 10.dp.toPx()
 
-            // Draw Seats
             drawRect(
                 color = Color.Black,
                 topLeft = Offset(
@@ -59,6 +62,7 @@ fun CarouselApp() {
                 size = Size(hubSize, hubSize)
             )
 
+            // Draw Seats
             seats.forEach { seat ->
                 val angleRad =
                     (seat.initialAngle) * (PI / 180f).toFloat()
